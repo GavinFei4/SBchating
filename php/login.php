@@ -3,8 +3,9 @@
  * Created by PhpStorm.
  * User: GavinFei
  * Date: 2018/8/20
- * Time: 21:41
- */$username=$_POST["username"];
+ * Time: 23:19
+ */
+$username=$_POST["username"];
 $password=$_POST["password"];
 
 //连接数据库的参数
@@ -19,10 +20,14 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 //
-$sql = "INSERT INTO users (username, password) VALUES ('$username','$password')";
-$sql ="select * from users where `username` = $username and `password` = $password";;
-$guodu = mysqli_query($conn, $sql);
+$sql ="select * from users where `username` = '$username' and `password` = '$password'";
+$login = mysqli_query($conn, $sql);
+if (mysqli_num_rows($login) > 0) {
+    // 输出数据
+    return "登陆成功" ;
 
-
+} else {
+    return"登录失败";
+}
 
 mysqli_close($conn);
